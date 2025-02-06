@@ -25,14 +25,14 @@ export default function NewItem() {
 
   return (
     <>
-      <div className="mt-16 w-56 flex justify-center items-center p-2 rounded-xl shadow-md shadow-black">
-          <h1 className="text-lg text-red-700 font-semibold grow-0 shrink-0">{quantity}</h1>
-          <button className="w-8 h-8 flex justify-center items-center p-2 rounded-full bg-green-400 shadow-xs shadow-black hover:bg-green-700 focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={minusDisabled} onClick={calculate(2)}>
+      <div className="mt-16 w-56 flex justify-center items-center p-2 gap-2 rounded-xl shadow-md shadow-black">
+          <h1 className="w-24 text-lg text-red-700 font-semibold grow-0 shrink-0">{quantity}</h1>
+          <button className="w-8 h-8 flex justify-center items-center p-2 rounded-md bg-green-400 shadow-xs shadow-black hover:bg-green-700 focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={minusDisabled} onClick={()=>calculate(2)}>
             <span className="font-bold text-2xl text-white pointer-events-none">
               -
             </span>
           </button>
-          <button className="w-8 h-8 flex justify-center items-center p-2 rounded-full bg-green-400 shadow-xs shadow-black hover:bg-green-700 focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={plusDisabled} onClick={calculate(1)}>
+          <button className="w-8 h-8 flex justify-center items-center p-2 rounded-md bg-green-400 shadow-xs shadow-black hover:bg-green-700 focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={plusDisabled} onClick={()=>calculate(1)}>
             <span className="font-bold text-2xl text-white pointer-events-none">
               +
             </span>
