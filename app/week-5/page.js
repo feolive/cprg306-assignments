@@ -21,11 +21,8 @@ export default function Page() {
   const [category, setCategory] = useState("produce");
   const [quantity, setQuantity] = useState(1);
 
-  const stopDefault = (e) => {
+  const handleSubmission = (e) => {
     e.preventDefault();
-  };
-  
-  const handleSubmission = () => {
     if (!name) {
       return;
     }
@@ -34,6 +31,7 @@ export default function Page() {
 
     alert(JSON.stringify(item));
     setName("");
+    setQuantity(1);
     setCategory("produce");
   };
 
@@ -41,7 +39,7 @@ export default function Page() {
     <>
       <form
         className="mt-10 w-[350px] flex flex-col justify-center items-center p-2 gap-2 bg-slate-400 rounded-md"
-        onSubmit={(e) => stopDefault(e)}
+        onSubmit={(e) => handleSubmission(e)}
       >
         <input className="h-12 w-full p-2 rounded-md"
           type="text"
@@ -65,7 +63,7 @@ export default function Page() {
             ))}
           </select>
         </div>
-        <button className="mt-2 h-12 w-full p-2 rounded-md bg-green-400 hover:bg-green-700 focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed" type="submit" onClick={() => handleSubmission()}>+</button>
+        <button className="mt-2 h-12 w-full p-2 rounded-md bg-green-400 hover:bg-green-700 focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed" type="submit">+</button>
       </form>
     </>
   );
