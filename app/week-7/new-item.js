@@ -38,6 +38,11 @@ export default function NewItem({ onAddItem }) {
     }
   }
 
+  const generateID = () => {
+    const date = new Date();
+    return date.getTime();
+  };
+
   const handleSubmission = (e) => {
     e.preventDefault();
     if (!name) {
@@ -50,7 +55,8 @@ export default function NewItem({ onAddItem }) {
     if (!category) {
       return;
     }
-    let item = { name, quantity, category };
+    const id = generateID();
+    let item = { id,name, quantity, category };
 
     onAddItem(item);
     setName("");
