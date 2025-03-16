@@ -1,7 +1,7 @@
 "use client";
 
 import Item from "./item";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ItemList({items, onItemSelect}) {
   const [sortBy, setSortBy] = useState("name");
@@ -23,7 +23,7 @@ export default function ItemList({items, onItemSelect}) {
         <button id="name" className="nav-btn activated" value="name" onClick={(e) => handleSortChange(e)}>Name</button>
         <button id="category" className="nav-btn" value="category" onClick={(e) => handleSortChange(e)}>Category</button>
       </div>
-      {items
+      {items && items
         .sort((a, b) =>
           sortBy === "name"
             ? a.name.localeCompare(b.name, "en")
