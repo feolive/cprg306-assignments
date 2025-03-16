@@ -17,43 +17,44 @@ const fetchMealIdeas = async (ingredient)=>{
     }
 }
 
+const fetchMealDetails = async (idMeal) => {
+  let url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+  try{
+      let resp = await fetch(url);
+      let data = await resp.json();
+      let ingredients = wrapDetails(data.meals[0]);
+      return {id: idMeal, val:ingredients};
+  } catch (error) {
+      console.log(error);
+      return null;
+  }
+}
+
 const wrapDetails = (details)=> {
   let vals = [];
   if(details){
     let prefix = "strIngredient";
     let quantityPrefix = "strMeasure";
-    for(let i = 0; i < 20; i++){
+    for(let i = 1; i <= 20; i++){
       if(!details[`${prefix}${i}`]){
         break;
       }
       vals.push(
-        details[`${prefix}${i}`] + " " + details[`${quantityPrefix}${i}`]
+        details[`${prefix}${i}`] + " (" + details[`${quantityPrefix}${i}`] + ")"
       );
     }
   }
-  let res = {
-    display: vals.length > 0,
-    ingredients: vals
-  };
-  return res;
+  return vals;
 }
 
 export default function MealIdeas({ingredient}) {
 
   const [meals, setMeals] = useState([]);
-  const [mealDetails, setMealDetails] = useState(new Map());
+  const [mealDetails, setMealDetails] = useState(null);
 
-  const fetchMealDetails = async (idMeal) => {
-    let url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
-    try{
-        let resp = await fetch(url);
-        let details = await resp.json().meals[0];
-        let val = wrapDetails(details);
-        setMealDetails(prev => new Map(prev.set(idMeal, val)));
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
+  const loadDetails = async (idMeal)=>{
+    let details = await fetchMealDetails(idMeal);
+    setMealDetails(details);
   }
 
   const loadMealIdeas = async (ingredient)=>{
@@ -71,16 +72,21 @@ export default function MealIdeas({ingredient}) {
       <h1>Meal Ideas</h1>
       <p>Here are some meal ideas using {ingredient}</p>
       {meals && meals.map((meal) => (
-        <ul key={meal.idMeal}>
-          <li className="p-2 rounded-md bg-gray-100 transition-transform duration-600 ease-linear hover:-translate-x-2 cursor-pointer" onClick={() => fetchMealDetails(meal.idMeal)}>{meal.strMeal}</li>
-          {mealDetails?.get(meal.idMeal)?.display && (
-            <ul className="p-2 rounded-md bg-gray-100 transition-transform duration-600 ease-linear hover:-translate-x-2 cursor-pointer">
-              {mealDetails.get(meal.idMeal).ingredients.map((ingredient, i) => (
-                <li key={i}>{ingredient}</li>
+        <div key={meal.idMeal} className="py-1" onClick={() => loadDetails(meal.idMeal)}>
+        <ul className="group hover:bg-gray-300"  key={meal.idMeal}>
+          <li className="p-2 bg-white transition-colors duration-150 ease-linear group-hover:bg-gray-300 cursor-pointer" >{meal.strMeal}</li>
+          {mealDetails && mealDetails.id === meal.idMeal && (
+            <>
+            <div className="h-0 border border-green-300"/>
+            <ul className="p-2 bg-white transition-colors duration-150 ease-linear group-hover:bg-gray-300 cursor-pointer">
+              {mealDetails.val.map((item, i) => (
+                <li key={i}>{item}</li>
               ))}
             </ul>
+            </>
           )}
         </ul>
+        </div>
       ))}
     </section>
   );
