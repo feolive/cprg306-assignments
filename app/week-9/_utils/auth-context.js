@@ -7,12 +7,14 @@ import {
   onAuthStateChanged,
   GithubAuthProvider,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { useFirebaseAuth } from "./firebase";
  
 const AuthContext = createContext();
  
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const auth = useFirebaseAuth();
+
  
   const gitHubSignIn = () => {
     const provider = new GithubAuthProvider();
@@ -22,13 +24,14 @@ export const AuthContextProvider = ({ children }) => {
   const firebaseSignOut = () => {
     return signOut(auth);
   };
- 
+
   useEffect(() => {
+    if (!auth) return;
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
-  }, [user]);
+  }, [user, auth]);
  
   return (
     <AuthContext.Provider value={{ user, gitHubSignIn, firebaseSignOut }}>
