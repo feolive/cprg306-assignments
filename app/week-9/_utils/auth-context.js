@@ -8,6 +8,7 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 import { useFirebaseAuth } from "./firebase";
+import SignIn from "./sign-in";
  
 const AuthContext = createContext();
  
@@ -35,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
  
   return (
     <AuthContext.Provider value={{ user, gitHubSignIn, firebaseSignOut }}>
-      {children}
+      {user ? children : <SignIn />}
     </AuthContext.Provider>
   );
 };

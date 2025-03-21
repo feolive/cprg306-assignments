@@ -4,15 +4,12 @@ import NewItem from "./new-item";
 import itemsData from "./items.json";
 import { useState } from "react";
 import MealIdeas from "./meal-ideas";
-import { useUserAuth } from "../_utils/auth-context";
 import Layout from "../layout";
-import SignIn from "../_utils/sign-in";
 
 
 export default function Page() {
   const [items, setItems] = useState(itemsData);
   const [ingredient, setIngredient] = useState("");
-  const { user } = useUserAuth();
 
   const handleAddItem = (newItem) => {
     setItems([...items, newItem]);
@@ -21,7 +18,6 @@ export default function Page() {
 
   return (
     <Layout>
-      { user ? (
       <div className="mt-8">
         <header>
           <h1 className="text-2xl font-bold text-green-400 italic">
@@ -42,10 +38,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-      ): (
-        <SignIn />
-      )
-      }
     </Layout>
   );
 }

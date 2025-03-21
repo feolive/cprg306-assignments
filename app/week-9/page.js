@@ -1,20 +1,13 @@
 "use client";
 
-import { useUserAuth } from "./_utils/auth-context";
 import Layout from "./layout";
-import SignIn from "./_utils/sign-in";
-import SignOut from "./_utils/sign-out";
+import Landing from "./_utils/landing";
 
 export default function Page() {
-  const { user } = useUserAuth();
 
   return (
     <Layout>
-      {user ? (
-        <SignOut />
-      ) : (
-        <SignIn />
-      )}
+      <Landing />
     </Layout>
   );
 }
