@@ -2,7 +2,7 @@
 import ItemList from "./item-list";
 import NewItem from "./new-item";
 import itemsData from "./items.json";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MealIdeas from "./meal-ideas";
 import { useUserAuth } from "../_utils/auth-context";
 import { useRouter } from "next/navigation";
@@ -17,10 +17,15 @@ export default function Page() {
     setItems([...items, newItem]);
   };
 
+  useEffect(() => {
+    if (!user) {
+      router.replace("/week-9");
+    }
+  }, [user, router]);
+
   return (
     <>
-      {user ? (
-        
+      {user && (
       <div className="mt-8">
         <header>
           <h1 className="text-2xl font-bold text-green-400 italic">
@@ -41,8 +46,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-      ) : (
-        router.push("/week-9")
       )}
     </>
   );
