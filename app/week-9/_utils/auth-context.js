@@ -8,7 +8,7 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 import { useFirebaseAuth } from "./firebase";
-import SignIn from "./sign-in";
+import SignIn from "../components/sign-in";
  
 const AuthContext = createContext();
  

@@ -1,13 +1,18 @@
 "use client";
 
 import Layout from "./layout";
-import Landing from "./_utils/landing";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 
 export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/week-9/shopping-list");
+  }, [router]);
 
   return (
-    <Layout>
-      <Landing />
-    </Layout>
+    <Layout />
   );
 }
