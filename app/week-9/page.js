@@ -1,6 +1,5 @@
 "use client";
 
-import Layout from "./layout";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
