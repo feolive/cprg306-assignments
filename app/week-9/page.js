@@ -9,10 +9,10 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/week-9/shopping-list");
+    router.replace("/week-9/shopping-list");
   }, [router]);
 
   return (
-    <Layout />
+    <></>
   );
 }

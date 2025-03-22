@@ -11,7 +11,7 @@ export default function Profile() {
     <Layout>
       <main className="mt-10 flex flex-col items-start justify-center gap-4">
         <header className="text-2xl font-bold text-green-400 italic">
-          Welcome to the Shopping List App
+          Profile Page
         </header>
         <h1 className="text-2xl font-bold text-foreground ">
           Welcome {user?.displayName}, ({user?.email})
