@@ -13,18 +13,17 @@ import { useFirestore } from "../_utils/firebase";
 export default function Page() {
   const [items, setItems] = useState([]);
   const [ingredient, setIngredient] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useUserAuth();
   const db = useFirestore();
 
   const handleAddItem = (newItem) => {
-    // setItems([...items, newItem]);
     if(db && user) {
-      try{
-        addItem(db, user?.uid, newItem);
-        setItems([...items, newItem]);
-      }catch(error){
+      addItem(db, user?.uid, newItem).then(
+        setLoading(true)
+      ).catch(error => {
         console.error("Error adding item:", error);
-      }
+      });
     }
   };
 
@@ -35,7 +34,7 @@ export default function Page() {
           return;
         }
         deleteItem(db, user?.uid, docId);
-        setItems(items.filter(item => item.docId !== docId));
+        setLoading(true);
       }catch(error){
         console.error("Error deleting item:", error);
       }
@@ -47,6 +46,7 @@ export default function Page() {
       const loadItems = async () => {
         const items = await getItems({db: db, userId: user?.uid});
         setItems(items);
+        setLoading(false);
       }
       try{
         loadItems();
@@ -56,7 +56,7 @@ export default function Page() {
     }else{
       setItems([]);
     }
-  }, [user, db]);
+  }, [user, db, loading]);
 
   return (
     <Layout>
