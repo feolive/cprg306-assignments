@@ -29,15 +29,13 @@ export default function Page() {
 
   const handleDeleteItem = (docId) => {
     if(db && user) {
-      try{
         if(!confirm("Delete this item?")) {
           return;
         }
-        deleteItem(db, user?.uid, docId);
+        deleteItem(db, user?.uid, docId).catch(error => {
+          console.error("Error deleting item:", error);
+        });
         setLoading(true);
-      }catch(error){
-        console.error("Error deleting item:", error);
-      }
     }
   };
 
