@@ -28,14 +28,14 @@ export default function Page() {
     }
   };
 
-  const handleDeleteItem = (id) => {
+  const handleDeleteItem = (docId) => {
     if(db && user) {
       try{
         if(!confirm("Delete this item?")) {
           return;
         }
-        deleteItem(db, user?.uid, id);
-        setItems(items.filter(item => item.id !== id));
+        deleteItem(db, user?.uid, docId);
+        setItems(items.filter(item => item.docId !== docId));
       }catch(error){
         console.error("Error deleting item:", error);
       }

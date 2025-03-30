@@ -6,7 +6,7 @@ export const getItems = async ({db, userId}) => {
     collection(db, "users", userId, "items")
   );
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return snapshot.docs.map((doc) => ({ docId: doc.id, ...doc.data() }));
 };
 
 export const addItem = async (db, userId, item) => {
